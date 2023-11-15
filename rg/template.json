@@ -2,13 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vnetNames": {
-            "type": "array"
-        },
-        "vnetLocations": {
-            "type": "array"
-        },
-        "vnetAddressPrefixes": {
+        "rgNames": {
             "type": "array"
         },
         "location": {
@@ -19,20 +13,13 @@
     "resources": [
         {
             "copy": {
-                "name": "vnetcopy",
-                "count": "[length(parameters('vnetNames'))]"
+                "name": "rgcopy",
+                "count": "[length(parameters('rgNames'))]"
             },
-            "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2021-08-01",
-            "name": "[parameters('vnetNames')[copyIndex()]]",
-            "location": "[parameters('vnetLocations')[copyIndex()]]",
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('vnetAddressPrefixes')[copyIndex()]]"
-                    ]
-                }
-            }
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2019-10-01",
+            "name": "[parameters('rgNames')[copyIndex()]]",
+            "location": "[parameters('location')]"
         }
     ]
 }

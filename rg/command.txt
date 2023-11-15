@@ -1,1 +1,1 @@
-az deployment group create --location  --template-file ./template.json --parameters parameters.json
+az deployment sub create --location  eastus --template-file ./template.json --parameters parameters.json
